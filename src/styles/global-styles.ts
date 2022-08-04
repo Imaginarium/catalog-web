@@ -1,36 +1,31 @@
-import { createGlobalStyle } from 'styled-components';
-import { StyleConstants } from './StyleConstants';
-/* istanbul ignore next */
+import { createGlobalStyle } from 'styled-components'
+
 export const GlobalStyle = createGlobalStyle`
   html,
   body {
-    height: 100%;
-    width: 100%;
-    line-height: 1.5;
+    //height: 100%;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: #e8eaf6;
   }
 
   body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    padding-top: ${StyleConstants.NAV_BAR_HEIGHT};
-    background-color: ${p => p.theme.background};
+    font-family: 'Poppins', sans-serif;
   }
 
-  body.fontLoaded {
-    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  #root {
+    //min-height: 100%;
+    //min-width: 100%;
   }
-  
+
   p,
   label {
     line-height: 1.5em;
+    margin: 0;
   }
 
-  input, select, button {
+  input, select {
     font-family: inherit;
     font-size: inherit;
   }
-
-  .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-`;
+`

@@ -1,29 +1,31 @@
-import * as React from 'react';
-import styled from 'styled-components/macro';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import iconImg from './assets/ic_launcher_round.png'
 
-export function Logo() {
+export default function Logo() {
+  const navigate = useNavigate()
+
   return (
-    <Wrapper>
-      <Title>React Boilerplate</Title>
-      <Description>Create React App Template</Description>
+    <Wrapper onClick={() => navigate('/')}>
+      <LogoImage src={iconImg} />
+      <Title>CATalog</Title>
     </Wrapper>
-  );
+  )
 }
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-`;
+  padding: 10px 20px 10px 20px;
+  cursor: pointer;
+`
 
-const Title = styled.div`
-  font-size: 1.25rem;
-  color: ${p => p.theme.text};
-  font-weight: bold;
-  margin-right: 1rem;
-`;
-
-const Description = styled.div`
-  font-size: 0.875rem;
-  color: ${p => p.theme.textSecondary};
-  font-weight: normal;
-`;
+const LogoImage = styled.img`
+  width: 60px;
+`
+const Title = styled.span`
+  color: white;
+  padding-inline: 10px;
+  font-size: 2rem;
+`

@@ -1,57 +1,182 @@
-import * as React from 'react';
-import styled from 'styled-components/macro';
-import { ReactComponent as DocumentationIcon } from './assets/documentation-icon.svg';
-import { ReactComponent as GithubIcon } from './assets/github-icon.svg';
+import {
+  Badge,
+  Popover,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  ListItemAvatar,
+  Avatar,
+  IconButton,
+  Divider,
+} from '@mui/material'
+import { useFavoritesSlice } from 'app/pages/HomePage/slice/favorites'
+import { selectFavorites } from 'app/pages/HomePage/slice/favorites/selectors'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import { media } from 'styles/media'
 
-export function Nav() {
+export default function Nav() {
+  const dispatch = useDispatch()
+  const { actions } = useFavoritesSlice()
+
+  const favorites = useSelector(selectFavorites)
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+  const open = Boolean(anchorEl)
+
+  /**
+   * Gets the clicked element and sets it as the anchor element for the popover
+   *
+   * @param event Event trigerred when clicked on an element
+   */
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO Why is Modal/Backdrop not stopping scroll?
+    document.documentElement.style.overflowY = 'hidden'
+    setAnchorEl(event.currentTarget)
+  }
+
+  /**
+   * Closes the popover
+   */
+  const handleClose = () => {
+    // TODO Why is Modal/Backdrop not stopping scroll?
+    document.documentElement.style.overflowY = 'auto'
+    setAnchorEl(null)
+  }
+
+  const navigate = useNavigate()
+
+  /**
+   * Opens the detail page of the specified breed
+   */
+  function navigateTo(name: string): void {
+    // TODO Why is Modal/Backdrop not stopping scroll?
+    document.documentElement.style.overflowY = 'auto'
+    navigate(`/breed/${name}`)
+  }
+  /**
+   * Lists of elements on the favorites
+   */
+  const listElements = favorites.map(favorite => (
+    <div key={`Div_${favorite.id}`}>
+      <ListItem
+        secondaryAction={
+          <IconButton
+            onClick={() => dispatch(actions.removeFromFavorites(favorite.id))}
+          >
+            <Icon className="material-icons trash">delete</Icon>
+          </IconButton>
+        }
+        disablePadding
+      >
+        <ListItemButton onClick={() => navigateTo(favorite.name)}>
+          <ListItemAvatar>
+            <Avatar alt={`Avatar`} src={favorite.img} />
+          </ListItemAvatar>
+          <ListItemText primary={favorite.name} />
+        </ListItemButton>
+      </ListItem>
+      <Divider />
+    </div>
+  ))
+
   return (
     <Wrapper>
-      <Item
-        href="https://cansahin.gitbook.io/react-boilerplate-cra-template/"
-        target="_blank"
-        title="Documentation Page"
-        rel="noopener noreferrer"
+      <NavItems>
+        <NavItem>
+          <Link to="/">Home</Link>
+        </NavItem>
+      </NavItems>
+      <IconButton>
+        <Badge badgeContent={favorites.length} color="primary">
+          <Icon className="material-icons" onClick={handleOpen}>
+            favorite
+          </Icon>
+        </Badge>
+      </IconButton>
+
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
       >
-        <DocumentationIcon />
-        Documentation
-      </Item>
-      <Item
-        href="https://github.com/react-boilerplate/react-boilerplate-cra-template"
-        target="_blank"
-        title="Github Page"
-        rel="noopener noreferrer"
-      >
-        <GithubIcon />
-        Github
-      </Item>
+        <PopoverContent>
+          {favorites.length > 0 ? (
+            <List>{listElements}</List>
+          ) : (
+            <EmptyFavorites>Nothing to show!</EmptyFavorites>
+          )}
+        </PopoverContent>
+      </Popover>
     </Wrapper>
-  );
+  )
 }
 
-const Wrapper = styled.nav`
+const Wrapper = styled.div`
   display: flex;
-  margin-right: -1rem;
-`;
-
-const Item = styled.a`
-  color: ${p => p.theme.primary};
-  cursor: pointer;
-  text-decoration: none;
-  display: flex;
-  padding: 0.25rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
   align-items: center;
+  margin-left: auto;
+  padding: 0 30px 0 20px;
 
-  &:hover {
-    opacity: 0.8;
+  ${media.small`
+  padding-inline: 10px;
+  `}
+`
+
+const Icon = styled.span`
+  color: white;
+
+  &.trash {
+    color: black;
+  }
+`
+
+const NavItems = styled.div`
+  padding-inline: 16px;
+
+  ${media.small`
+    display: none
+  `}
+`
+const NavItem = styled.div`
+  margin-inline: 10px;
+
+  a {
+    color: white;
+  }
+`
+
+const PopoverContent = styled.div`
+  width: 30vw;
+  height: 70vh;
+  overflow-y: scroll; /* Add the ability to scroll */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 
-  &:active {
-    opacity: 0.4;
-  }
+  ${media.medium`
+  width: 45vw;
+  height: 50vh;
+  `}
 
-  .icon {
-    margin-right: 0.25rem;
-  }
-`;
+  ${media.small`
+  width: 80vw;
+  height: 70vh;
+  `}
+`
+
+const EmptyFavorites = styled.span`
+  display: flex;
+  justify-content: center;
+  padding-block: 16px;
+`
