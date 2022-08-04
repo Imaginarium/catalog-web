@@ -1,13 +1,41 @@
+import { useCounterSlice } from 'app/pages/HomePage/slice/counter'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Logo from './Logo'
 import Nav from './Nav'
 
 export default function Navbar() {
+  const dispatch = useDispatch()
+  const { actions } = useCounterSlice()
+
+  const navigate = useNavigate()
+
+  /**
+   * Handles navigation on the header
+   *
+   * @param name Optional - name of the selected breed
+   */
+  const navigateTo = (name?: string) => {
+    if (name) {
+      // TODO Why is Modal/Backdrop not stopping scroll?
+      document.documentElement.style.overflowY = 'auto'
+      navigate(`/breed/${name}`)
+    } else {
+      /* If no name is specfied return to home page
+       * reseting the Infinite Scroll state
+       */
+      dispatch(actions.reset())
+      navigate('/')
+      window.scrollTo(0, 0)
+    }
+  }
+
   return (
     <Wrapper>
-      <Logo />
-      <Nav />
+      <Logo handleNavigation={navigateTo} />
+      <Nav handleNavigation={navigateTo} />
     </Wrapper>
   )
 }

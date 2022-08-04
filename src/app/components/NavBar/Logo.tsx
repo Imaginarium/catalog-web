@@ -1,13 +1,14 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import iconImg from './assets/ic_launcher_round.png'
 
-export default function Logo() {
-  const navigate = useNavigate()
+interface Props {
+  handleNavigation: () => void
+}
 
+export default function Logo({ handleNavigation }: Props) {
   return (
-    <Wrapper onClick={() => navigate('/')}>
+    <Wrapper onClick={() => handleNavigation()}>
       <LogoImage src={iconImg} />
       <Title>CATalog</Title>
     </Wrapper>

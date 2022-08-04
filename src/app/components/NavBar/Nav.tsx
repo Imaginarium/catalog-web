@@ -14,11 +14,14 @@ import { useFavoritesSlice } from 'app/pages/HomePage/slice/favorites'
 import { selectFavorites } from 'app/pages/HomePage/slice/favorites/selectors'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { media } from 'styles/media'
 
-export default function Nav() {
+interface Props {
+  handleNavigation: (name?: string) => void
+}
+
+export default function Nav({ handleNavigation }: Props) {
   const dispatch = useDispatch()
   const { actions } = useFavoritesSlice()
 
@@ -47,16 +50,6 @@ export default function Nav() {
     setAnchorEl(null)
   }
 
-  const navigate = useNavigate()
-
-  /**
-   * Opens the detail page of the specified breed
-   */
-  function navigateTo(name: string): void {
-    // TODO Why is Modal/Backdrop not stopping scroll?
-    document.documentElement.style.overflowY = 'auto'
-    navigate(`/breed/${name}`)
-  }
   /**
    * Lists of elements on the favorites
    */
@@ -72,7 +65,12 @@ export default function Nav() {
         }
         disablePadding
       >
-        <ListItemButton onClick={() => navigateTo(favorite.name)}>
+        <ListItemButton
+          onClick={() => {
+            setAnchorEl(null)
+            handleNavigation(favorite.name)
+          }}
+        >
           <ListItemAvatar>
             <Avatar alt={`Avatar`} src={favorite.img} />
           </ListItemAvatar>
@@ -86,8 +84,8 @@ export default function Nav() {
   return (
     <Wrapper>
       <NavItems>
-        <NavItem>
-          <Link to="/">Home</Link>
+        <NavItem onClick={() => handleNavigation()}>
+          <p>Home</p>
         </NavItem>
       </NavItems>
       <IconButton>
@@ -147,9 +145,11 @@ const NavItems = styled.div`
 `
 const NavItem = styled.div`
   margin-inline: 10px;
+  cursor: pointer;
 
-  a {
+  p {
     color: white;
+    text-decoration: underline;
   }
 `
 

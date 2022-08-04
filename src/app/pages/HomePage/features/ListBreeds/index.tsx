@@ -10,16 +10,21 @@ import { sagaActions } from '../../slice/breeds/types'
 import { useFavoritesSlice } from '../../slice/favorites'
 import { selectFavorites } from '../../slice/favorites/selectors'
 import { CircularProgress } from '@mui/material'
+import { useCounterSlice } from '../../slice/counter'
+import { selectCount } from '../../slice/counter/selector'
 
 export default function ListBreeds(props) {
   const dispatch = useDispatch()
   const breedActions = useBreedsSlice().actions
   const favoriteActions = useFavoritesSlice().actions
+  const counterActions = useCounterSlice().actions
 
   const breeds = useSelector(selectBreeds)
   const favorites = useSelector(selectFavorites)
+  const numItems = useSelector(selectCount)
 
-  const [numItems, setNumItems] = useState(10)
+  console.log(numItems)
+  //const [numItems, setNumItems] = useState(10)
 
   const navigate = useNavigate()
 
@@ -65,7 +70,8 @@ export default function ListBreeds(props) {
    * Adds more elements to the list if scroll has reached threshold and there's items to show
    */
   const loadFunc = () => {
-    setNumItems(prevState => prevState + 10)
+    //setNumItems(prevState => prevState + 10)
+    dispatch(counterActions.increment(10))
   }
 
   /**

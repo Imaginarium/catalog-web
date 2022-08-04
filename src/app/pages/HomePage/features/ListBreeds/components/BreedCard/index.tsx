@@ -57,7 +57,12 @@ export default function BreedCard({
 
   return (
     <Card
-      sx={{ width: 350, marginBottom: 4, cursor: 'pointer' }}
+      sx={{
+        width: 350,
+        marginBottom: '32px',
+        marginInline: '16px',
+        cursor: 'pointer',
+      }}
       onClick={handleNavigation}
     >
       <CardMedia

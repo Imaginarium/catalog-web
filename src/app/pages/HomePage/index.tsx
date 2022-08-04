@@ -1,6 +1,6 @@
 import Footer from 'app/components/Footer'
 import Navbar from 'app/components/Navbar'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import styled from 'styled-components/macro'
 import ListBreeds from './features/ListBreeds'
@@ -12,12 +12,6 @@ export function HomePage() {
   const updateFilteredName = event => {
     setFilterName(event.target.value)
   }
-
-  useEffect(() => {
-    // TODO Needs to scroll to top
-    console.log('Entrei')
-    //window.scrollTo(0, 0)
-  }, [])
 
   return (
     <>
