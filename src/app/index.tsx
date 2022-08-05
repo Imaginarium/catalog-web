@@ -31,7 +31,7 @@ export function App() {
 
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="/breed/:name" element={<DetailPage />} />
+        <Route path="breed/:name" element={<DetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <GlobalStyle />

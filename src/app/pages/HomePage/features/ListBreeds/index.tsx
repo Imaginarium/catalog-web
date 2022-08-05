@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import BreedCard from './components/BreedCard'
 import styled from 'styled-components/macro'
 import { useBreedsSlice } from '../../slice/breeds'
@@ -23,9 +23,6 @@ export default function ListBreeds(props) {
   const favorites = useSelector(selectFavorites)
   const numItems = useSelector(selectCount)
 
-  console.log(numItems)
-  //const [numItems, setNumItems] = useState(10)
-
   const navigate = useNavigate()
 
   /*
@@ -41,6 +38,33 @@ export default function ListBreeds(props) {
   useEffect(() => {
     dispatch(favoriteActions.retrieveFavorties())
   }, [favoriteActions, dispatch])
+
+  /**
+   * Adds more elements to the list if scroll has reached threshold and there's items to show
+   */
+  const loadFunc = () => {
+    dispatch(counterActions.increment(10))
+  }
+
+  /**
+   * Opens the detail page of the specified breed
+   */
+  const navigateTo = (name: string) => {
+    navigate(`/breed/${name}`)
+  }
+
+  /**
+   *Manages the favorites state
+   *
+   * @param id Identifier of the breed to be added to or removed from the favorites
+   */
+  function manageFavorites(id: string, name: string, img: string) {
+    if (favorites.findIndex(item => item.id === id) !== -1) {
+      dispatch(favoriteActions.removeFromFavorites(id))
+    } else {
+      dispatch(favoriteActions.addToFavorites({ id: id, name: name, img: img }))
+    }
+  }
 
   /**
    * Transforms the state into displayable components
@@ -66,39 +90,12 @@ export default function ListBreeds(props) {
       />
     ))
 
-  /**
-   * Adds more elements to the list if scroll has reached threshold and there's items to show
-   */
-  const loadFunc = () => {
-    //setNumItems(prevState => prevState + 10)
-    dispatch(counterActions.increment(10))
-  }
-
-  /**
-   * Opens the detail page of the specified breed
-   */
-  const navigateTo = (name: string) => {
-    navigate(`/breed/${name}`)
-  }
-
-  /**
-   *Manages the favorites state
-   *
-   * @param id Identifier of the breed to be added to or removed from the favorites
-   */
-  function manageFavorites(id: string, name: string, img: string) {
-    if (favorites.findIndex(item => item.id === id) !== -1) {
-      dispatch(favoriteActions.removeFromFavorites(id))
-    } else {
-      dispatch(favoriteActions.addToFavorites({ id: id, name: name, img: img }))
-    }
-  }
-
   return (
     <InfiniteScroll
       pageStart={0}
       loadMore={loadFunc}
       hasMore={numItems < breeds.length}
+      threshold={500}
       loader={
         <LoadItems className="loader" key={0}>
           <CircularProgress />

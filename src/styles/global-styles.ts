@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
   html,
   body {
-    //height: 100%;
     width: 100vw;
     overflow-x: hidden;
     background-color: #e8eaf6;
@@ -11,11 +10,6 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Poppins', sans-serif;
-  }
-
-  #root {
-    //min-height: 100%;
-    //min-width: 100%;
   }
 
   p,

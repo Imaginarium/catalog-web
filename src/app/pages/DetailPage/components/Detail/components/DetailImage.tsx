@@ -16,7 +16,7 @@ export default function DetailImage({ imgUrl }: Props) {
 
 const Wrapper = styled.div`
   width: 50vw;
-  min-height: 50vw;
+  height: 50vw;
   display: flex;
   align-items: center;
   justify-content: center;
