@@ -33,7 +33,7 @@ export default function CardBreed({
    *
    * @param event Event triggered on click
    */
-  const manageFavorites = event => {
+  const handleFavoriteClick = event => {
     event.stopPropagation() // Stops Card onClick event from triggering
     handleFavorites()
     presentSnackbar()
@@ -74,7 +74,7 @@ export default function CardBreed({
       />
       <CardHeader
         action={
-          <IconButton onClick={manageFavorites}>
+          <IconButton onClick={handleFavoriteClick}>
             <Icon className="material-icons">
               {isFavorite ? 'favorite' : 'favorite_outline'}
             </Icon>

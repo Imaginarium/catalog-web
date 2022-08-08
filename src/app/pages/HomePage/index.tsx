@@ -9,7 +9,7 @@ import Searchbar from './features/Searchbar'
 export function HomePage() {
   const [filterName, setFilterName] = useState('')
 
-  const updateFilteredName = event => {
+  const handleInput = event => {
     setFilterName(event.target.value)
   }
 
@@ -21,7 +21,7 @@ export function HomePage() {
       </Helmet>
       <Navbar />
       <Wrapper>
-        <Searchbar handleInput={updateFilteredName} initialValue={filterName} />
+        <Searchbar handleInput={handleInput} initialValue={filterName} />
         <ListBreeds filteredName={filterName} />
       </Wrapper>
       <Footer />

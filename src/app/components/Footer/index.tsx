@@ -9,10 +9,6 @@ export default function Footer() {
   )
 }
 
-/*
-
-*/
-
 const Wrapper = styled.div`
   display: flex;
   align-items: center;

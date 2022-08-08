@@ -17,7 +17,7 @@ export default function Navbar() {
    *
    * @param name Optional - name of the selected breed
    */
-  const navigateTo = (name?: string) => {
+  function navigateTo(name?: string) {
     if (name) {
       // TODO Why is Modal/Backdrop not stopping scroll?
       document.documentElement.style.overflowY = 'auto'

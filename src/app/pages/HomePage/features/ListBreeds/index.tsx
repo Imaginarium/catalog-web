@@ -53,7 +53,7 @@ export default function ListBreeds({ filteredName }: Props) {
   /**
    * Opens the detail page of the specified breed
    */
-  const navigateTo = (name: string) => {
+  function navigateTo(name: string) {
     navigate(`/breed/${name}`)
   }
 

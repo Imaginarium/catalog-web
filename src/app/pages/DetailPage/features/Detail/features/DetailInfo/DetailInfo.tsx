@@ -29,7 +29,7 @@ export default function DetailInfo({ breedInfo }: Props) {
   /**
    * Dispatchs actions to the store to manage favorites' state
    */
-  const handleFavorites = () => {
+  const handleFavoriteClick = () => {
     if (isInFavorites()) {
       dispatch(actions.removeFromFavorites(breedInfo.id))
     } else {
@@ -47,7 +47,7 @@ export default function DetailInfo({ breedInfo }: Props) {
    *
    * @returns true if breed in favorties, false otherwise
    */
-  const isInFavorites = () => {
+  function isInFavorites() {
     return favorites.findIndex(item => item.id === breedInfo.id) !== -1
   }
 
@@ -56,7 +56,7 @@ export default function DetailInfo({ breedInfo }: Props) {
       <NameWrapper>
         <Name>{breedInfo.name}</Name>
         <IconButton
-          onClick={handleFavorites}
+          onClick={handleFavoriteClick}
           sx={{ marginInline: '16px', color: 'black' }}
         >
           <Tooltip
