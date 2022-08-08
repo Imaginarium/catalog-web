@@ -3,12 +3,13 @@ import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import styled from 'styled-components/macro'
 import { useParams } from 'react-router-dom'
-import Detail from './components/Detail'
-import { useBreedsSlice } from '../HomePage/slice/breeds'
+import { useBreedsSlice } from '../../slices/breeds'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectBreeds } from '../HomePage/slice/breeds/selectors'
+import { selectBreeds } from '../../slices/breeds/selectors'
 import Footer from 'app/components/Footer'
-import { sagaActions } from '../HomePage/slice/breeds/types'
+import { sagaActions } from '../../slices/breeds/types'
+import Detail from './features/Detail'
+import { NotFoundPage } from 'app/components/NotFoundPage'
 
 export function DetailPage() {
   const dispatch = useDispatch()
@@ -16,37 +17,45 @@ export function DetailPage() {
 
   const breeds = useSelector(selectBreeds)
 
-  /*
-   * Loads breeds on startup
-   */
-  useEffect(() => {
-    dispatch({ type: sagaActions.FETCH_BREEDS_DATA_SAGA })
-  }, [actions, dispatch])
-
   /**
    * URL parameters
    */
   const params = useParams()
 
   /**
-   * Breed passed as parameter
+   * Gets the breed passed as parameter
    */
   const breed = breeds.filter(breed => breed.name === params['name'])
 
+  /*
+   * Loads breeds on mount
+   */
+  useEffect(() => {
+    dispatch({ type: sagaActions.FETCH_BREEDS_DATA_SAGA })
+  }, [actions, dispatch])
+
   return (
     <>
-      <Helmet>
-        <title>Detail Page</title>
-        <meta
-          name="description"
-          content="A Boilerplate application detail page"
-        />
-      </Helmet>
-      <Navbar />
-      <Wrapper>
-        {breed.length === 1 && <Detail selectedBreed={breed[0]} />}
-      </Wrapper>
-      <Footer />
+      {breed.length === 1 ? (
+        <>
+          <Helmet>
+            <title>Detail Page</title>
+            <meta
+              name="description"
+              content="A Boilerplate application detail page"
+            />
+          </Helmet>
+          <Navbar />
+          <Wrapper>
+            <Detail selectedBreed={breed[0]} />
+          </Wrapper>
+          <Footer />
+        </>
+      ) : (
+        <>
+          <NotFoundPage />
+        </>
+      )}
     </>
   )
 }

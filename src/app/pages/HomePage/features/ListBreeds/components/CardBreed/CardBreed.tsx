@@ -18,7 +18,7 @@ interface Props {
   handleFavorites: () => void
 }
 
-export default function BreedCard({
+export default function CardBreed({
   breedImage,
   breedTitle,
   breedDescription,
@@ -34,13 +34,14 @@ export default function BreedCard({
    * @param event Event triggered on click
    */
   const manageFavorites = event => {
-    event.stopPropagation()
+    event.stopPropagation() // Stops Card onClick event from triggering
     handleFavorites()
     presentSnackbar()
   }
 
   /**
-   *
+   * Presents a snackbar to the user alerting if the breed
+   * was added to or removed from the favorites
    */
   const presentSnackbar = () => {
     const message: string = isFavorite
@@ -92,6 +93,7 @@ const Icon = styled.span`
   color: #ff0000;
 `
 
+// To make description text only show 3 lines
 const fontSize = '1rem'
 const lineHeight = 1.1
 const linesToShow = 3

@@ -1,8 +1,8 @@
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
-import { BreedsState } from 'app/pages/HomePage/slice/breeds/types'
+import { BreedsState } from 'app/slices/breeds/types'
 import { CounterState } from 'app/pages/HomePage/slice/counter/types'
-import { FavoritesState } from 'app/pages/HomePage/slice/favorites/types'
+import { FavoritesState } from 'app/slices/favorites/types'
 
 /* 
   Because the redux-injectors injects your reducers asynchronously somewhere in your code

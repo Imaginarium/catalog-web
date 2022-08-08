@@ -10,7 +10,7 @@ export default function Logo({ handleNavigation }: Props) {
   return (
     <Wrapper onClick={() => handleNavigation()}>
       <LogoImage src={iconImg} />
-      <Title>CATalog</Title>
+      <LogoTitle>CATalog</LogoTitle>
     </Wrapper>
   )
 }
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 const LogoImage = styled.img`
   width: 60px;
 `
-const Title = styled.span`
+const LogoTitle = styled.span`
   color: white;
   padding-inline: 10px;
   font-size: 2rem;

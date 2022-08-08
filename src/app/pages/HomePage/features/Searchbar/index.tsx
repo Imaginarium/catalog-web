@@ -18,7 +18,7 @@ export default function Searchbar(props) {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon className="material-icons">search</Icon>
+              <SearchIcon className="material-icons">search</SearchIcon>
             </InputAdornment>
           ),
         }}
@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const Icon = styled.span``
+const SearchIcon = styled.span``
 
 const SearchbarEl = styledMUI(TextField)({
   width: '40vw',

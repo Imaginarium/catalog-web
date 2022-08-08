@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react'
-import BreedCard from './components/BreedCard'
+import CardBreed from './components/CardBreed/CardBreed'
 import styled from 'styled-components/macro'
-import { useBreedsSlice } from '../../slice/breeds'
+import { useBreedsSlice } from '../../../../slices/breeds'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectBreeds } from '../../slice/breeds/selectors'
+import { selectBreeds } from '../../../../slices/breeds/selectors'
 import { useNavigate } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroller'
-import { sagaActions } from '../../slice/breeds/types'
-import { useFavoritesSlice } from '../../slice/favorites'
-import { selectFavorites } from '../../slice/favorites/selectors'
+import { sagaActions } from '../../../../slices/breeds/types'
+import { useFavoritesSlice } from '../../../../slices/favorites'
+import { selectFavorites } from '../../../../slices/favorites/selectors'
 import { CircularProgress } from '@mui/material'
 import { useCounterSlice } from '../../slice/counter'
 import { selectCount } from '../../slice/counter/selector'
 
-export default function ListBreeds(props) {
+interface Props {
+  filteredName: string
+}
+
+export default function ListBreeds({ filteredName }: Props) {
   const dispatch = useDispatch()
   const breedActions = useBreedsSlice().actions
   const favoriteActions = useFavoritesSlice().actions
@@ -26,14 +30,14 @@ export default function ListBreeds(props) {
   const navigate = useNavigate()
 
   /*
-   * Loads breeds on startup
+   * Loads breeds on mount
    */
   useEffect(() => {
     dispatch({ type: sagaActions.FETCH_BREEDS_DATA_SAGA })
   }, [breedActions, dispatch])
 
   /*
-   * Loads favorites on startup
+   * Loads favorites on mount
    */
   useEffect(() => {
     dispatch(favoriteActions.retrieveFavorties())
@@ -75,11 +79,11 @@ export default function ListBreeds(props) {
    */
   let breedElements: any[] = breeds
     .filter(breed =>
-      breed.name.toLowerCase().startsWith(props.filteredName.toLowerCase()),
+      breed.name.toLowerCase().startsWith(filteredName.toLowerCase()),
     )
     .slice(0, numItems)
     .map(breed => (
-      <BreedCard
+      <CardBreed
         key={breed.id}
         breedImage={breed.img}
         breedTitle={breed.name}

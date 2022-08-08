@@ -1,13 +1,13 @@
 import { IconButton, Tooltip } from '@mui/material'
-import { Breed } from 'app/pages/HomePage/slice/breeds/types'
-import { useFavoritesSlice } from 'app/pages/HomePage/slice/favorites'
-import { selectFavorites } from 'app/pages/HomePage/slice/favorites/selectors'
+import { Breed } from 'app/slices/breeds/types'
+import { useFavoritesSlice } from 'app/slices/favorites'
+import { selectFavorites } from 'app/slices/favorites/selectors'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { media } from 'styles/media'
-import DetailStats from './DetailStats'
-import DetailTraits from './DetailTraits'
+import DetailStats from './components/DetailStats'
+import DetailTraits from './components/DetailTraits'
 
 interface Props {
   breedInfo: Breed

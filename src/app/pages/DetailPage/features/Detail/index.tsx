@@ -3,10 +3,10 @@ import Modal from '@mui/material/Modal'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { media } from 'styles/media'
-import DetailImage from './components/DetailImage'
-import DetailInfo from './components/DetailInfo'
 import { styled as styledMUI } from '@mui/material/styles'
-import { Breed } from 'app/pages/HomePage/slice/breeds/types'
+import { Breed } from 'app/slices/breeds/types'
+import DetailImage from './features/DetailImage/DetailImage'
+import DetailInfo from './features/DetailInfo/DetailInfo'
 
 interface Props {
   selectedBreed: Breed

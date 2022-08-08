@@ -10,8 +10,8 @@ import {
   IconButton,
   Divider,
 } from '@mui/material'
-import { useFavoritesSlice } from 'app/pages/HomePage/slice/favorites'
-import { selectFavorites } from 'app/pages/HomePage/slice/favorites/selectors'
+import { useFavoritesSlice } from 'app/slices/favorites'
+import { selectFavorites } from 'app/slices/favorites/selectors'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'

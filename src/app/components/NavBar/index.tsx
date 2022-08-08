@@ -3,8 +3,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import Logo from './Logo'
-import Nav from './Nav'
+import Logo from './features/Logo'
+import Nav from './features/Nav'
 
 export default function Navbar() {
   const dispatch = useDispatch()
