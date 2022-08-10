@@ -12,7 +12,33 @@ function* fetchData() {
         'x-api-key': 'fd4044dd-e5af-46b6-b1f9-72de6eefad30',
       },
     })
-    yield put(actions.getBreeds(breeds))
+
+    yield put(
+      actions.getBreeds(
+        breeds.map(breed => ({
+          id: breed.id,
+          img: breed.image ? breed.image.url : '',
+          name: breed.name,
+          origin: breed.origin,
+          lifeSpan: breed.life_span,
+          weight: breed.weight.metric,
+          hypoallergenic: breed.hypoallergenic === 1 ? true : false,
+          description: breed.description,
+          adaptability: breed.adaptability,
+          affectionLevel: breed.affection_level,
+          childFriendly: breed.child_friendly,
+          dogFriendly: breed.dog_friendly,
+          energyLevel: breed.energy_level,
+          healthIssues: breed.health_issues,
+          intelligence: breed.intelligence,
+          sheddingLevel: breed.shedding_level,
+          socialNeeds: breed.social_needs,
+          strangerFriendly: breed.stranger_friendly,
+          vocalisation: breed.vocalisation,
+          wikipediaUrl: breed.wikipedia_url ? breed.wikipedia_url : '',
+        })),
+      ),
+    )
   } catch (err: any) {
     console.log(err)
   }
